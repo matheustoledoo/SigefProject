@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+asyncpg
+pydantic
+pdfplumber
+python-multipart
+alembic
+python-dotenv

@@ -1,0 +1,351 @@
+/* global.css */
+
+/* 1. Reset/CSS Normalize básico */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 8. Header */
+header {
+  background: var(--color-bg);
+  padding: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+}
+header h1 {
+  margin: 0;
+}
+
+/* 9. Upload Form refinado */
+.upload-form {
+  background: var(--color-bg-alt);
+  border: none;
+  box-shadow: none;
+  padding: 1rem;
+  align-items: center;
+}
+.upload-form input[type="file"] {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 0.5rem;
+}
+.upload-form .upload-button {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.upload-form .upload-button:hover {
+  background: #0e806a;
+  border-color: #0e806a;
+}
+
+/* 10. Interval Rows */
+.interval-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  background: var(--color-bg-alt);
+}
+.interval-row + .interval-row {
+  margin-top: 0.5rem;
+}
+.interval-row .actions button {
+  margin-left: 0.5rem;
+}
+.interval-row .actions button:first-child {
+  margin-left: 0; /* evita gap extra à esquerda */
+}
+
+/* 11. Search Card */
+.search-card {
+  background: var(--color-bg-alt);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+}
+.search-card h2 {
+  margin-bottom: 1rem;
+}
+.search-card .form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.search-card .form-row:last-child {
+  margin-bottom: 0;
+}
+.search-card .form-row input {
+  flex: 1;
+}
+.search-card .form-row button {
+  flex-shrink: 0;
+}
+/* 8. Header */
+header {
+  background: var(--color-bg);
+  padding: 1rem 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+}
+header h1 {
+  margin: 0;
+}
+
+/* 9. Upload Form refinado */
+.upload-form {
+  background: var(--color-bg-alt);
+  border: none;
+  box-shadow: none;
+  padding: 1rem;
+  align-items: center;
+}
+.upload-form input[type="file"] {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 0.5rem;
+}
+.upload-form .upload-button {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.upload-form .upload-button:hover {
+  background: #0e806a;
+  border-color: #0e806a;
+}
+
+/* 10. Interval Rows */
+.interval-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  background: var(--color-bg-alt);
+}
+.interval-row + .interval-row {
+  margin-top: 0.5rem;
+}
+.interval-row .actions button {
+  margin-left: 0.5rem;
+}
+.interval-row .actions button:first-child {
+  margin-left: 0; /* evita gap extra à esquerda */
+}
+
+/* 11. Search Card */
+.search-card {
+  background: var(--color-bg-alt);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+}
+.search-card h2 {
+  margin-bottom: 1rem;
+}
+.search-card .form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.search-card .form-row:last-child {
+  margin-bottom: 0;
+}
+.search-card .form-row input {
+  flex: 1;
+}
+.search-card .form-row button {
+  flex-shrink: 0;
+}
+
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f7f9fc;
+}
+
+/* 2. Variáveis de cor */
+:root {
+  --color-primary: #1e3a8a;
+  --color-secondary: #2563eb;
+  --color-accent: #10b981;
+  --color-bg: #ffffff;
+  --color-bg-alt: #f1f5f9;
+  --color-border: #d1d5db;
+  --color-text: #374151;
+  --color-text-light: #6b7280;
+  --radius: 6px;
+  --transition: 0.2s ease-in-out;
+}
+
+/* 3. Containers e grid básico */
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+/* 4. Tipografia */
+h1, h2, h3, h4, h5 {
+  color: var(--color-primary);
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 1em;
+  color: var(--color-text);
+}
+
+/* 5. Botões padrão */
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  background-color: var(--color-secondary);
+  color: #fff;
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+button:hover {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+button:disabled {
+  background-color: var(--color-border);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+}
+
+/* 6. Inputs padrão */
+input[type="text"],
+input[type="file"],
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 100%;
+  transition: border-color var(--transition);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+}
+
+/* 7. Cards e zonas */
+.card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Adicione após .card {...} */
+
+.interval-row {
+  margin-bottom: 1rem;
+}
+
+.interval-info {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.actions button {
+  margin-left: 0.5rem;
+}
+
+.interval-details {
+  margin-top: 1rem;
+  background: var(--color-bg-alt);
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+}
+
+.gaps-section .gap-row {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.gap-active {
+  background: #e0f2ff;
+}
+
+.active-section textarea,
+.preview-block textarea {
+  width: 100%;
+  height: 8rem;
+  font-family: monospace;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  resize: vertical;
+}
+
+.preview-block p {
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li a {
+  text-decoration: none;
+  color: var(--color-secondary);
+}
+
+ul li a:hover {
+  text-decoration: underline;
+}
+
+
+/* --- Upload Form Styling --- */
+.upload-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.upload-form input[type="file"] {
+  flex: 1;
+}
+
+.upload-form .upload-button {
+  flex-shrink: 0;
+}
+
