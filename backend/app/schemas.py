@@ -1,3 +1,5 @@
+# backend/app/schemas.py
+
 from pydantic import BaseModel
 from typing import List, Optional
 
@@ -14,6 +16,14 @@ class PointOut(PointBase):
 
 class CertificateBase(BaseModel):
     certification_id: str
+
+class CertificateSummary(BaseModel):
+    certification_id: str
+    denominação: Optional[str] = None
+    proprietario: Optional[str] = None
+
+    class Config:
+        orm_mode = True
 
 class CertificateOut(BaseModel):
     certification_id: str
@@ -38,7 +48,3 @@ class CertificateOut(BaseModel):
 
     class Config:
         orm_mode = True
-
-
-class CertificateSummary:
-    pass

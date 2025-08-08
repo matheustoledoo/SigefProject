@@ -13,6 +13,7 @@ import datetime
 import uuid
 from .database import Base
 
+
 class PDFUpload(Base):
     __tablename__ = "pdf_uploads"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -47,13 +48,19 @@ class Certificate(Base):
 
     __table_args__ = (UniqueConstraint("certification_id", name="uq_certification_id"),)
 
+# backend/app/models.py
+
+
 class Point(Base):
     __tablename__ = "points"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    code = Column(String, unique=True, index=True)
-    prefix = Column(String)
-    number = Column(String)
-    certificate_id = Column(UUID(as_uuid=True), ForeignKey("certificates.id"))
+    code = Column(String, unique=True, index=True, nullable=False)
+    prefix = Column(String, nullable=False)
+    number = Column(Integer, nullable=False)        # <— aqui
+    certificate_id = Column(UUID(as_uuid=True), ForeignKey("certificates.id"), nullable=False)
     certificate = relationship("Certificate", back_populates="points")
 
-    __table_args__ = (UniqueConstraint("code", name="uq_point_code"),)
+    __table_args__ = (
+        UniqueConstraint("code", name="uq_point_code"),
+    )
+
