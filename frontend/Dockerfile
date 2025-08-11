@@ -1,33 +1,32 @@
 # -------- build stage --------
-FROM node:20-bullseye AS build
+FROM node:18-alpine AS build
 WORKDIR /app
 
-# Instala deps
+# deps
 COPY package*.json ./
 RUN npm ci
 
-# Copia o resto do código
+# fonte
 COPY . .
 
-# Injeta URL do backend no build
+# injeta a URL do backend no build (passada via variável no Railway)
 ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=${REACT_APP_API_URL}
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
-# (1) normaliza line endings CRLF -> LF (se houver)
-# (2) garante permissão de execução nos bins do npm
-# (3) chama o react-scripts via node para não depender do .bin
-RUN find node_modules/react-scripts -type f -name "*.js" -print0 | xargs -0 sed -i 's/\r$//' || true \
- && chmod +x node_modules/.bin/* || true \
- && node node_modules/react-scripts/bin/react-scripts.js build
+# build do CRA
+RUN npm run build
 
 # -------- runtime stage --------
-FROM node:20-bullseye
-WORKDIR /app
+FROM nginx:1.25-alpine
 
-# servidor estático simples
-RUN npm i -g serve
-COPY --from=build /app/build /app/build
+# copia template do nginx com porta vinda do $PORT
+COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 
-# Railway fornece $PORT; localmente usa 3000
-EXPOSE 3000
-CMD ["sh", "-c", "serve -s build -l ${PORT:-3000}"]
+# copia artefatos do build
+COPY --from=build /app/build /usr/share/nginx/html
+
+# por padrão a Railway fornece $PORT; se não houver, usa 8080
+ENV PORT=8080
+
+# gera o conf com envsubst e inicia nginx
+CMD sh -c "envsubst '\$PORT' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
