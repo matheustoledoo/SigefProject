@@ -7,3 +7,4 @@ pdfplumber
 python-multipart
 alembic
 python-dotenv
+psycopg-binary
