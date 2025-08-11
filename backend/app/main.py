@@ -1,22 +1,27 @@
 from fastapi import FastAPI
 from . import routes
 from .database import engine, Base
-from fastapi.middleware.cors import CORSMiddleware  # <<< adicione
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 app.include_router(routes.router)
 
-# CORS (ajusta origin conforme deploy)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # em produção troque para o domínio do frontend
+    allow_origins=["*"],        # em produção prefira o domínio do seu frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"ok": True}
 
-# criar tabelas automaticamente (para dev; em produção use migrations)
+@app.get("/healthz")
+async def health():
+    return {"status": "healthy"}
+
 @app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
