@@ -1,31 +1,34 @@
 # backend/app/schemas.py
 
-from pydantic import BaseModel
 from typing import List, Optional
+from pydantic import BaseModel, ConfigDict, Field
 
-class PointBase(BaseModel):
+# Base comum com from_attributes habilitado (equivale ao antigo orm_mode=True)
+class ORMModel(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+
+class PointBase(ORMModel):
     code: str
     prefix: str
     number: int
 
+
 class PointOut(PointBase):
     certificate_certification_id: str
 
-    class Config:
-        orm_mode = True
 
-class CertificateBase(BaseModel):
+class CertificateBase(ORMModel):
     certification_id: str
 
-class CertificateSummary(BaseModel):
+
+class CertificateSummary(ORMModel):
     certification_id: str
     denominação: Optional[str] = None
     proprietario: Optional[str] = None
 
-    class Config:
-        orm_mode = True
 
-class CertificateOut(BaseModel):
+class CertificateOut(ORMModel):
     certification_id: str
     denominação: Optional[str]
     proprietario: Optional[str]
@@ -44,7 +47,4 @@ class CertificateOut(BaseModel):
     azimutes: Optional[str]
     data_certificacao: Optional[str]
     data_geracao: Optional[str]
-    points: List[PointOut] = []
-
-    class Config:
-        orm_mode = True
+    points: List[PointOut] = Field(default_factory=list)
