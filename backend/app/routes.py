@@ -86,6 +86,7 @@ async def search_point(
             "code": point.code,
             "prefix": point.prefix,
             "number": point.number,
+            "certificate_certification_id": point.certificate_certification_id,
         },
         "certificate": {
             "certification_id": cert.certification_id,

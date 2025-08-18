@@ -121,7 +121,7 @@ async def parse_pdf_and_store(file_path: str, filename: str, db: AsyncSession):
                 existing_point = (await db.execute(existing_point_stmt)).scalar_one_or_none()
                 if existing_point:
                     continue
-                point = Point(code=full_code, prefix=prefix, number=number, certificate_id=cert.id)
+                point = Point(code=full_code, prefix=prefix, number=number, certificate_id=cert.id, certificate_certification_id=cert.certification_id,)
                 db.add(point)
                 novos_pontos.append(full_code)
 

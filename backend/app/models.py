@@ -58,6 +58,8 @@ class Point(Base):
     prefix = Column(String, nullable=False)
     number = Column(Integer, nullable=False)        # <— aqui
     certificate_id = Column(UUID(as_uuid=True), ForeignKey("certificates.id"), nullable=False)
+    certificate_certification_id = Column(String, index=True, nullable=True)
+
     certificate = relationship("Certificate", back_populates="points")
 
     __table_args__ = (

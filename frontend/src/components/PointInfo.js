@@ -23,7 +23,7 @@ export default function PointInfo({ data }) {
 
       <h4>Certificação Associada</h4>
       <ul>
-        <li><strong>ID Certificação:</strong> {certificate.certification_id}</li>
+        <li><strong>ID Certificação:</strong> {point.certificate_certification_id}</li>
         {/* adicione outros campos que queira exibir */}
       </ul>
     </div>
