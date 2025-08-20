@@ -14,6 +14,7 @@ export default function App() {
   const [pointResult, setPointResult] = useState(null);
   const [certResult, setCertResult] = useState(null);
   const [certList, setCertList] = useState(null);
+  const [expandedCerts, setExpandedCerts] = useState({});
 
   const fetchStats = useCallback(async () => {
     try {
@@ -86,21 +87,43 @@ export default function App() {
           setCertList(null);
            }}
         onAll={(data) => {
-          setCertList(data.certificates || []);
+          if (data) {
+            setCertList(data.certificates || []);
+            setExpandedCerts({});
+          } else {
+            setCertList(null);
+            setExpandedCerts({});
+          }
           setPointResult(null);
           setCertResult(null);
         }}
+        allVisible={!!certList}
       />
 
       {pointResult && <PointInfo data={pointResult} />}
       {certResult && <CertificateDetail data={certResult} />}
-       {certList &&
-        certList.map((c) => (
-          <CertificateDetail
-            key={c.certificate.certification_id}
-            data={c}
-          />
-        ))}
+ {certList &&
+        certList.map((c) => {
+          const id = c.certificate.certification_id;
+          const expanded = expandedCerts[id];
+          return (
+            <div key={id} style={{ marginBottom: 8 }}>
+              <div
+                style={{
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  color: "#007bff",
+                }}
+                onClick={() =>
+                  setExpandedCerts((prev) => ({ ...prev, [id]: !prev[id] }))
+                }
+              >
+                {id}
+              </div>
+              {expanded && <CertificateDetail data={c} />}
+            </div>
+          );
+        })}
     </div>
   );
 }

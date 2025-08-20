@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import API from "../api";
 import { showToast } from "../toast";
 
-export default function Search({ onPoint, onCertification, onAll }) {
+export default function Search({ onPoint, onCertification, onAll, allVisible  }) {
   const [point, setPoint] = useState("");
   const [cert, setCert] = useState("");
 
@@ -31,7 +31,11 @@ export default function Search({ onPoint, onCertification, onAll }) {
     }
   };
 
-  const buscarTodos = async () => {
+ const buscarTodos = async () => {
+    if (allVisible) {
+      onAll(null);
+      return;
+    }
     try {
       const res = await API.get("/search/certification/all");
       console.log("Busca Todos – res.data:", res.data);
@@ -80,11 +84,11 @@ export default function Search({ onPoint, onCertification, onAll }) {
         >
           Buscar certificação
         </button>
-        <button
+         <button
           onClick={buscarTodos}
           style={{ marginLeft: 8, padding: "6px 12px" }}
         >
-          Todos certificados
+          {allVisible ? "Ocultar certificados" : "Todos certificados"}
         </button>
       </div>
     </div>
