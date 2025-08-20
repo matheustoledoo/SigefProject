@@ -13,6 +13,7 @@ export default function App() {
   const [intervals, setIntervals] = useState({});
   const [pointResult, setPointResult] = useState(null);
   const [certResult, setCertResult] = useState(null);
+  const [certList, setCertList] = useState(null);
 
   const fetchStats = useCallback(async () => {
     try {
@@ -42,6 +43,7 @@ export default function App() {
   const handleUploaded = async () => {
     setPointResult(null);
     setCertResult(null);
+    setCertList(null);
     await Promise.all([fetchStats(), fetchIntervals()]);
   };
 
@@ -76,15 +78,29 @@ export default function App() {
         onPoint={(data) => {
           setPointResult(data);
           setCertResult(null);
+          setCertList(null);
         }}
         onCertification={(data) => {
           setCertResult(data);
           setPointResult(null);
+          setCertList(null);
+           }}
+        onAll={(data) => {
+          setCertList(data.certificates || []);
+          setPointResult(null);
+          setCertResult(null);
         }}
       />
 
       {pointResult && <PointInfo data={pointResult} />}
       {certResult && <CertificateDetail data={certResult} />}
+       {certList &&
+        certList.map((c) => (
+          <CertificateDetail
+            key={c.certificate.certification_id}
+            data={c}
+          />
+        ))}
     </div>
   );
 }

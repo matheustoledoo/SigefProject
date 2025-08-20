@@ -123,6 +123,46 @@ async def search_certification(
     cert_id = raw_id.strip()
     logging.info(f"[search_certification] recebido {raw_id!r} → normalizado: {cert_id!r}")
 
+    # Se for 'all', retorna todas as certificações com seus pontos
+    if cert_id.lower() == "all":
+        stmt_all = select(Certificate).options(selectinload(Certificate.points))
+        result_all = await session.execute(stmt_all)
+        certs = result_all.scalars().all()
+        data = []
+        for cert in certs:
+            points_list = [
+                {"code": p.code, "prefix": p.prefix, "number": p.number}
+                for p in cert.points
+            ]
+            data.append(
+                {
+                    "certificate": {
+                        "certification_id": cert.certification_id,
+                        "denominação": getattr(
+                            cert, "denominacao", getattr(cert, "denominação", None)
+                        ),
+                        "proprietario": cert.proprietario,
+                        "matricula_imovel": cert.matricula_imovel,
+                        "natureza_area": cert.natureza_area,
+                        "cnpj": cert.cnpj,
+                        "municipio_uf": cert.municipio_uf,
+                        "codigo_incra": cert.codigo_incra,
+                        "responsavel_tecnico": cert.responsavel_tecnico,
+                        "formacao": cert.formacao,
+                        "codigo_credenciamento": cert.codigo_credenciamento,
+                        "sistema_geodesico": cert.sistema_geodesico,
+                        "documento_rt": cert.documento_rt,
+                        "area_local": cert.area_local,
+                        "perimetro": cert.perimetro,
+                        "azimutes": cert.azimutes,
+                        "data_certificacao": cert.data_certificacao,
+                        "data_geracao": cert.data_geracao,
+                    },
+                    "points": points_list,
+                }
+            )
+        return {"certificates": data}
+
     # Tenta match exato primeiro
     stmt = (
         select(Certificate)

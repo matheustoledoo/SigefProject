@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import API from "../api";
 import { showToast } from "../toast";
 
-export default function Search({ onPoint, onCertification }) {
+export default function Search({ onPoint, onCertification, onAll }) {
   const [point, setPoint] = useState("");
   const [cert, setCert] = useState("");
 
@@ -28,6 +28,18 @@ export default function Search({ onPoint, onCertification }) {
       onCertification(res.data);
     } catch (e) {
       showToast(e.response?.data?.detail || "Certificação não encontrada");
+    }
+  };
+
+  const buscarTodos = async () => {
+    try {
+      const res = await API.get("/search/certification/all");
+      console.log("Busca Todos – res.data:", res.data);
+      onAll(res.data);
+    } catch (e) {
+      showToast(
+        e.response?.data?.detail || "Erro ao buscar certificações"
+      );
     }
   };
 
@@ -67,6 +79,12 @@ export default function Search({ onPoint, onCertification }) {
           style={{ marginLeft: 8, padding: "6px 12px" }}
         >
           Buscar certificação
+        </button>
+        <button
+          onClick={buscarTodos}
+          style={{ marginLeft: 8, padding: "6px 12px" }}
+        >
+          Todos certificados
         </button>
       </div>
     </div>
