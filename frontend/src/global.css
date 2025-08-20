@@ -1,5 +1,15 @@
 /* global.css */
 
+.btn-accent {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.btn-accent:hover {
+  background-color: #0e806a;
+  border-color: #0e806a;
+}
+
+
 /* 1. Reset/CSS Normalize básico */
 *,
 *::before,

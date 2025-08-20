@@ -78,16 +78,8 @@ export default function Search({ onPoint, onCertification, onAll, allVisible  })
           value={cert}
           onChange={(e) => setCert(e.target.value)}
         />
-        <button
-          onClick={buscarCert}
-          style={{ marginLeft: 8, padding: "6px 12px" }}
-        >
-          Buscar certificação
-        </button>
-         <button
-          onClick={buscarTodos}
-          style={{ marginLeft: 8, padding: "6px 12px" }}
-        >
+       <button onClick={buscarCert}>Buscar certificação</button>
+        <button onClick={buscarTodos} className="btn-accent">
           {allVisible ? "Ocultar certificados" : "Todos certificados"}
         </button>
       </div>
