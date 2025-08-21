@@ -50,14 +50,15 @@ class CertificateOut(ORMModel):
     data_geracao: Optional[str]
     points: List[PointOut] = Field(default_factory=list)
 
-    class UserCreate(BaseModel):
-        username: str
-        password: str
 
-    class UserOut(ORMModel):
-        id: UUID
-        username: str
+class UserCreate(BaseModel):
+    username: str
+    password: str
 
-    class Token(BaseModel):
-        access_token: str
-        token_type: str
+class UserOut(ORMModel):
+    id: UUID
+    username: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
