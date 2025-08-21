@@ -13,6 +13,13 @@ import datetime
 import uuid
 from .database import Base
 
+class User(Base):
+    """Basic user model for authentication."""
+
+    __tablename__ = "users"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    username = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
 
 class PDFUpload(Base):
     __tablename__ = "pdf_uploads"

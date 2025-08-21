@@ -1,6 +1,7 @@
 # backend/app/schemas.py
 
 from typing import List, Optional
+from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 
 # Base comum com from_attributes habilitado (equivale ao antigo orm_mode=True)
@@ -48,3 +49,15 @@ class CertificateOut(ORMModel):
     data_certificacao: Optional[str]
     data_geracao: Optional[str]
     points: List[PointOut] = Field(default_factory=list)
+
+    class UserCreate(BaseModel):
+        username: str
+        password: str
+
+    class UserOut(ORMModel):
+        id: UUID
+        username: str
+
+    class Token(BaseModel):
+        access_token: str
+        token_type: str

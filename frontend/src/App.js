@@ -6,6 +6,7 @@ import Search from "./components/Search";
 import PointInfo from "./components/PointInfo";
 import CertificateDetail from "./components/CertificateDetail";
 import API from "./api";
+import Login from "./Login";
 
 export default function App() {
   const prefixes = ["D5Y-M", "D5Y-P", "D5Y-V"];
@@ -15,6 +16,7 @@ export default function App() {
   const [certResult, setCertResult] = useState(null);
   const [certList, setCertList] = useState(null);
   const [expandedCerts, setExpandedCerts] = useState({});
+  const [authed, setAuthed] = useState(() => !!localStorage.getItem("token"));
 
   const fetchStats = useCallback(async () => {
     try {
@@ -37,9 +39,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    fetchStats();
-    fetchIntervals();
-  }, [fetchStats, fetchIntervals]);
+if (authed) {
+      fetchStats();
+      fetchIntervals();
+    }
+  }, [authed, fetchStats, fetchIntervals]);
 
   const handleUploaded = async () => {
     setPointResult(null);
@@ -48,10 +52,20 @@ export default function App() {
     await Promise.all([fetchStats(), fetchIntervals()]);
   };
 
+  if (!authed) {
+    return <Login onSuccess={() => setAuthed(true)} />;
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setAuthed(false);
+  };
+
   return (
     <div className="container">
       <header>
         <h1>SIGEF Manager</h1>
+        <button onClick={handleLogout}>Sair</button>
       </header>
 
       <Upload onUploaded={handleUploaded} />

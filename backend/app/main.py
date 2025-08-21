@@ -1,16 +1,19 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
 from pathlib import Path
 from sqlalchemy import text
 
 from . import routes
+from .auth_routes import router as auth_router
+from .auth import get_current_user
 from .database import engine, Base
 
 app = FastAPI()
 
 # --- API (com prefixo /api) ---
-app.include_router(routes.router, prefix="/api")
+app.include_router(auth_router, prefix="/api")
+app.include_router(routes.router, prefix="/api", dependencies=[Depends(get_current_user)])
 
 # --- CORS ---
 app.add_middleware(
